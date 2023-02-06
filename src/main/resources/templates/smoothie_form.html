@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Smoothie</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+
+<body>
+  <div th:replace="partial/header :: header"></div>
+
+  <div>
+    <h2 class="text-center">${pageTitle}</h2>
+
+    <div>
+      <form th:action="@{/smoothie/save}" method="post" enctype="multipart/form-data" th:object="${smoothie}">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div>
+          <div>
+            <label for="name">Name</label>
+            <div>
+              <input type="text" th:field="*{name}" required minlength="2" maxlength="128"
+                id="name" />
+            </div>
+          </div>
+
+          <div>
+            <label for="description">Details</label>
+            <div>
+              <input type="text" th:field="*{details}" minlength="2" maxlength="256"
+                id="description" />
+            </div>
+          </div>
+
+          <div>
+            <label for="nutrition">Nutrition</label>
+            <div>
+              <input type="text" th:field="*{nutrition}" minlength="2"
+                     id="nutrition" />
+            </div>
+          </div>
+
+          <div>
+            <label for="enabled">Enabled</label>
+            <div>
+              <input type="checkbox" th:field="*{enabled}" id="enabled" />
+            </div>
+          </div>
+
+          <div class="text-center">
+            <input type="submit" value="Save" />
+            <input type="button" value="Cancel" id="btnCancel"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div th:replace="partial/footer :: footer"></div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#btnCancel").on("click", function () {
+        window.location = "[[@{/smoothies}]]";
+      });
+    });
+  </script>
+
+</body>
+
+</html>

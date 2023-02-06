@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Credit Suisse Smoothie App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:replace="partial/header :: header"></div>
+
+<div th:if="${message != null}" class="alert-message" role="alert">
+    [[${message}]]
+</div>
+
+<div th:if="${smoothies != null}">
+    <table class="table table-hover table-responsive-xl">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Details</th>
+            <th scope="col">Nutrition</th>
+            <th scope="col">Enabled</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="smoothie : ${smoothies}">
+            <th scope="row">[[${smoothie.id}]]</th>
+            <td>[[${smoothie.name}]]</td>
+            <td>[[${smoothie.details}]]</td>
+            <td>[[${smoothie.nutrition}]]</td>
+            <td>
+                <a th:if="${smoothie.enabled == true}"
+                   th:href="@{'/smoothie/' + ${smoothie.id} + '/enabled/false'}"
+                   title="Disable this smoothie">Enabled</a>
+                <a th:if="${smoothie.enabled == false}"
+                   th:href="@{'/smoothie/' + ${smoothie.id} + '/enabled/true'}"
+                   title="Enable this smoothie">Disabled</a>
+            </td>
+            <td>
+                <a th:href="@{'/smoothie/' + ${smoothie.id}}" title="Edit this smoothie">EDIT</a>
+                &nbsp;
+                <a th:href="@{'/smoothie/delete/' + ${smoothie.id}}" th:smoothieName="${smoothie.name}" id="btnDelete"
+                   title="Delete this smoothie">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="" th:unless="${smoothies != null}">
+    <span>No smoothies found!</span>
+</div>
+
+<div th:replace="partial/footer :: footer"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDelete").on("click", function () {
+            alert("Are you sure deleting ?");
+        });
+    });
+</script>
+</body>
+</html>
