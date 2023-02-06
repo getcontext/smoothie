@@ -44,6 +44,10 @@ public class SmoothieWebSecurityConfiguration {
                         .requestMatchers("/", "/smoothie/get").permitAll()
                         .anyRequest().authenticated()
                 )
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/smoothie/edit", "/smoothie/new", "/smoothie/delete").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
